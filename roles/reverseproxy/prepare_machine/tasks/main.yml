@@ -1,0 +1,4 @@
+---
+- name: "Prepare reverseproxy by downloading all essential packages"
+  ansible.builtin.package:
+    name: "{{ packages_reverseproxy }}"

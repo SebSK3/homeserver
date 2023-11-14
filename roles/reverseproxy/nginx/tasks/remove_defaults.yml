@@ -1,0 +1,9 @@
+- name: "Remove default config from available"
+  ansible.builtin.file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+- name: "Remove default config from enabled"
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+

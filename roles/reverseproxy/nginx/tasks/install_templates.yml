@@ -1,0 +1,30 @@
+---
+
+- name: "Copy over templates"
+  ansible.builtin.template:
+    src: "{{ config_file }}"
+    dest: "/etc/nginx/sites-available/{{ config_file | basename | regex_replace('.j2$', '') }}"
+  with_fileglob:
+    - templates/*.j2
+  loop_control:
+    loop_var: config_file
+  notify:
+    - Test nginx
+    - Restart nginx
+
+- name: "Get all templates that were transferred"
+  ansible.builtin.find:
+    paths: /etc/nginx/sites-available
+  register: templates
+
+- name: "Activate sites templates"
+  ansible.builtin.file:
+    src: "{{ config_to_enable.path }}"
+    dest: "{{ config_to_enable.path | regex_replace('sites-available', 'sites-enabled') }}"
+    state: link
+  with_items: "{{ templates.files }}"
+  loop_control:
+    loop_var: config_to_enable
+  notify:
+    - Test nginx
+    - Restart nginx

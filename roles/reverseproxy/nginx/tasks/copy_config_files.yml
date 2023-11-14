@@ -1,0 +1,23 @@
+- name: "Copy over proxy config files"
+  ansible.builtin.template:
+    src: templates/common/proxy.j2
+    dest: /etc/nginx/proxy.conf
+    mode: 0644
+
+- name: "Copy over ssl config files"
+  ansible.builtin.template:
+    src: templates/common/ssl.j2
+    dest: /etc/nginx/ssl.conf
+    mode: 0644
+
+- name: "Create scripts directory"
+  ansible.builtin.file:
+    path: /opt/scripts
+    state: directory
+    mode: 0644
+
+- name: "Copy Cloudflare IP script file"
+  ansible.builtin.copy:
+    src: files/cloudflare-ips.sh
+    dest: /opt/scripts/cloudflare-ips.sh
+    mode: '0744'

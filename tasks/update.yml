@@ -1,0 +1,17 @@
+- name: Update packages
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: true
+- name: Install vim
+  ansible.builtin.apt:
+    name: vim
+
+- name: Check if reboot required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: Reboot if required
+  ansible.builtin.reboot:
+    msg: Rebooting due to a kernel update
+  when: reboot_required_file.stat.exists

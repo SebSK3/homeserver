@@ -1,0 +1,30 @@
+---
+- hosts: all
+  name: "Perform essentials on all machines"
+  pre_tasks:
+    - name: "Perform essentials"
+      ansible.builtin.import_tasks: tasks/update.yml
+- hosts: reverse_proxy
+  name: "Perform installation of reverse proxy server"
+  tasks:
+    - name: "Import all roles"
+      ansible.builtin.include_role:
+        name: '{{ reverse_proxy_role }}'
+      loop:
+        - 'reverseproxy/prepare_machine'
+        - 'reverseproxy/nginx'
+      loop_control:
+        loop_var: reverse_proxy_role
+  tags: reverse_proxy
+
+- hosts: storage
+  name: "Perform installation of storage server"
+  tasks:
+    - name: "Import all roles"
+      ansible.builtin.include_role:
+        name: '{{ storage_role }}'
+      loop:
+        - 'storage/prepare_machine'
+      loop_control:
+        loop_var: storage_role
+  tags: storage

@@ -1,0 +1,4 @@
+---
+- name: "Prepare storage machine by downloading all essential packages"
+  ansible.builtin.package:
+    name: "{{ packages_storage }}"

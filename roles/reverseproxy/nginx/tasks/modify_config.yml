@@ -1,0 +1,59 @@
+- name: Check if JIT is enabled
+  ansible.builtin.lineinfile:
+    state: absent
+    path: "/etc/nginx/nginx.conf"
+    regexp: "^pcre_jit"
+  check_mode: true
+  changed_when: false # This just makes things look prettier in the logs
+  register: check_jit
+
+- name: Enable JIT in nginx
+  ansible.builtin.lineinfile:
+    path: "/etc/nginx/nginx.conf"
+    insertafter: "^error_log"
+    line: 'pcre_jit on;'
+  when: check_jit.found == 0
+
+- name: Ensure worker_connections is set to 1024
+  ansible.builtin.lineinfile:
+    path: /etc/nginx/nginx.conf
+    search_string: 'worker_connections 768;'
+    line: "\tworker_connections 1024;"
+
+- name: "Check if place for Cloudflare settings already exists"
+  ansible.builtin.lineinfile:
+    state: absent
+    path: "/etc/nginx/nginx.conf"
+    regexp: "^# BEGIN ANSIBLE MANAGED BLOCK"
+  check_mode: true
+  changed_when: false # This just makes things look prettier in the logs
+  register: check_cloudflare
+- name: "Create place for Cloudflare settings"
+  ansible.builtin.lineinfile:
+    path: /etc/nginx/nginx.conf
+    insertafter: "http {"
+    line: "# BEGIN ANSIBLE MANAGED BLOCK\n# END ANSIBLE MANAGED BLOCK"
+  when: check_cloudflare.found == 0
+
+- name: Add Cloudflare settings to /etc/nginx/nginx.conf
+  ansible.builtin.blockinfile:
+    path: /etc/nginx/nginx.conf
+    block: |2
+              real_ip_recursive on;
+              include /etc/nginx/cloudflare;
+              # Don't tell nginx version to the clients.
+              server_tokens off;
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+
+- name: "Activate cron job for Cloudflare IPs"
+  ansible.builtin.cron:
+    name: "get cloudflare IPs"
+    minute: "15"
+    hour: "2"
+    job: "/opt/scripts/cloudflare-ip-whitelist-sync.sh >/dev/null 2>&1"
+
+- name: "Generate dhparam for nginx"
+  ansible.builtin.openssl_dhparam:
+    path: /etc/nginx/dhparams.pem
+    size: 4096
+

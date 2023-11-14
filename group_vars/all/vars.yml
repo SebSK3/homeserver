@@ -1,0 +1,25 @@
+username: sebsk
+timezone: Europe/Warsaw
+guid: "1000"
+
+packages_reverseproxy:
+  - nginx
+  - certbot
+  - curl
+  - wget
+
+packages_storage:
+  - samba
+
+msmtp_accounts:
+- account: notifications
+  host: "{{ mail_host }}"
+  port: "{{ mail_port }}"
+  auth: "on"
+  from: "{{ mail_notifications }}"
+  user: "{{ mail_notifications }}"
+  password: "{{ mail_password }}"
+msmtp_default_account: "notifications"
+msmtp_alias_default: "{{ mail_notifications }}"
+
+lan_network: "{{ '.'.join(ansible_default_ipv4.address.split('.')[0:3]) }}.0/24"
