@@ -1,0 +1,12 @@
+- name: "Create samba user ({{ smb_user }})"
+  ansible.builtin.user:
+    name: "{{ smb_user }}"
+    password: "{{ smb_password }}"
+
+- name: "Configure Samba user ({{ smb_user }})"
+  shell: >
+    (pdbedit --user={{ smb_user }} 2>&1 > /dev/null)
+    || (echo '{{ smb_password_plain }}'; echo '{{ smb_password_plain }}')
+    | smbpasswd -s -a {{ smb_user }}
+  register: smbpasswd
+  changed_when: "'Added user' in smbpasswd.stdout"

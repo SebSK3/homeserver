@@ -1,0 +1,8 @@
+- name: "Copy over samba config file"
+  ansible.builtin.template:
+    src: templates/smb.conf.j2
+    dest: /etc/samba/smb.conf
+    mode: 0644
+    validate: 'testparm -s %s'
+  notify:
+  - Restart samba

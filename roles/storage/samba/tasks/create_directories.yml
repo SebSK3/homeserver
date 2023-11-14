@@ -1,0 +1,13 @@
+- name: "Create data directory"
+  ansible.builtin.file:
+    path: /src/data
+    state: directory
+    mode: 0755
+
+- name: "Create {{user}} share directory"
+  ansible.builtin.file:
+    path: "/srv/data/{{ smb_user }}"
+    state: directory
+    mode: 0755
+    owner: "{{ smb_user }}"
+    group: "{{ smb_user }}"

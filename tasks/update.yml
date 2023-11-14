@@ -11,7 +11,7 @@
     path: /var/run/reboot-required
   register: reboot_required_file
 
-- name: Reboot if required
+- name: "Reboot. WARNING: WILL HANG ON LXC"
   ansible.builtin.reboot:
     msg: Rebooting due to a kernel update
   when: reboot_required_file.stat.exists

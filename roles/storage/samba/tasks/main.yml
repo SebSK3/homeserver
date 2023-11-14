@@ -1,0 +1,9 @@
+- name: "Include all samba tasks"
+  include_tasks: "{{ samba_task }}"
+  loop:
+    - create_samba_user.yml
+    - create_directories.yml
+    - copy_config_file.yml
+  loop_control:
+    loop_var: samba_task
+  tags: nginx

@@ -1,0 +1,2 @@
+- name: Restart samba
+  include_tasks: handlers/restart_samba.yml
