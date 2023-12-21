@@ -1,10 +1,11 @@
-- name: "Include all reverse proxy tasks"
-  include_tasks: "{{ reverse_proxy_task }}"
-  loop:
-    - remove_defaults.yml
-    - copy_config_files.yml
-    - modify_config.yml
-    - install_templates.yml
-  loop_control:
-    loop_var: reverse_proxy_task
-  tags: nginx
+#- name: "Include all reverse proxy tasks"
+#  include_tasks: "{{ reverse_proxy_task }}"
+#  loop:
+#    - remove_defaults.yml
+#    - copy_config_files.yml
+#    - modify_config.yml
+#    - install_templates.yml
+#  loop_control:
+#    loop_var: reverse_proxy_task
+#  tags: nginx
+
