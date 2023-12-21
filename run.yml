@@ -13,6 +13,7 @@
         name: '{{ reverse_proxy_role }}'
       loop:
         - 'reverseproxy/prepare_machine'
+        - 'reverseproxy/haproxy'
 #        - 'reverseproxy/nginx'
       loop_control:
         loop_var: reverse_proxy_role

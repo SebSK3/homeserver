@@ -1,0 +1,5 @@
+- name: "Disable HAProxy"
+  service:
+    name: haproxy
+    state: stopped
+    enabled: false

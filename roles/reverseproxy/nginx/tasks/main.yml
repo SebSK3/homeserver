@@ -1,6 +1,7 @@
 - name: "Include all reverse proxy tasks"
   include_tasks: "{{ reverse_proxy_task }}"
   loop:
+    - disable_haproxy.yml
     - remove_defaults.yml
     - copy_config_files.yml
     - modify_config.yml

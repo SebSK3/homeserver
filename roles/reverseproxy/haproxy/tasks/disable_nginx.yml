@@ -1,0 +1,5 @@
+- name: "Disable nginx"
+  service:
+    name: nginx
+    state: stopped
+    enabled: false

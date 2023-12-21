@@ -4,6 +4,7 @@ guid: "1000"
 
 packages_reverseproxy:
   - nginx
+  - haproxy
   - certbot
   - curl
   - wget
