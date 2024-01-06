@@ -3,5 +3,6 @@
   roles:
     - role: 'prepare_machine'
     - role: 'ejabberd'
+    - { role: 'nginx', become: true }
 
   tags: xmpp

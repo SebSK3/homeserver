@@ -1,4 +1,4 @@
-- name: "Create directory {{ docker_dir }}/{{ container_name }}/conf"
+- name: "Create directory conf"
   become: true
   ansible.builtin.file:
     path: "{{ docker_dir }}/{{ container_name }}/conf"
@@ -6,11 +6,21 @@
     owner: "ejabberd"
     group: "ejabberd"
     mode: "0755"
-- name: "Copy over templates"
+- name: "Copy over ejabberd.yml template"
   become: true
   ansible.builtin.template:
     src: 'templates/ejabberd.yml.j2'
     dest: "{{ docker_dir }}/{{ container_name }}/conf/ejabberd.yml"
+    owner: "ejabberd"
+    group: "ejabberd"
+    mode: "0644"
+  notify: Restart ejabberd
+
+- name: "Copy over interc template"
+  become: true
+  ansible.builtin.template:
+    src: 'templates/inetrc.j2'
+    dest: "{{ docker_dir }}/{{ container_name }}/conf/inetrc"
     owner: "ejabberd"
     group: "ejabberd"
     mode: "0644"

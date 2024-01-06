@@ -1,0 +1,12 @@
+- name: "Include all nginx tasks"
+  ansible.builtin.include_tasks: "{{ nginx_task }}"
+  loop:
+    - remove_defaults.yml
+    - copy_config_files.yml
+    - modify_config.yml
+    - ssl_acme.yml
+    - install_templates.yml
+  loop_control:
+    loop_var: nginx_task
+  tags: nginx
+

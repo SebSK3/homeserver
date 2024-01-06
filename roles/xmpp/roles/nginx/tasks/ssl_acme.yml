@@ -1,0 +1,50 @@
+- name: "Check if acme.sh installed"
+  ansible.builtin.shell: '/root/.acme.sh/acme.sh'
+  ignore_errors: true
+  register: acme_installed
+- name: "Install acme.sh"
+  ansible.builtin.shell: 'curl https://get.acme.sh | sh -s email={{ email }}'
+  when: acme_installed.rc > 0
+
+- name: "Set letsencrypt as default CA"
+  ansible.builtin.shell: '/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt'
+  when: acme_installed.rc > 0
+
+- name: "Get certificate"
+  ansible.builtin.shell: '/root/.acme.sh/acme.sh --issue --dns dns_cf --ocsp-must-staple --keylength 4096 -d xmpp.{{ host }}'
+  environment:
+    CF_Token: "{{ cloudflare_token }}"
+  when: acme_installed.rc > 0
+
+- name: "Create folder for certs"
+  ansible.builtin.file:
+    path: /etc/nginx/ssl
+    state: directory
+    mode: 0644
+  when: acme_installed.rc > 0
+
+- name: "Create folder for cert xmpp.{{host}}"
+  ansible.builtin.file:
+    path: "/etc/nginx/ssl/xmpp.{{ host }}"
+    state: directory
+    mode: 0644
+  when: acme_installed.rc > 0
+
+- name: "Get certificate"
+  ansible.builtin.shell: '/root/.acme.sh/acme.sh -d "$DOMAIN" --install-cert --fullchain-file "${CONFIG_ROOT}/$DOMAIN.fullchain.cer" --key-file "${CONFIG_ROOT}/$DOMAIN.key" --cert-file "${CONFIG_ROOT}/$DOMAIN.cer"'
+  environment:
+    DOMAIN: "xmpp.{{ host }}"
+    CONFIG_ROOT: "/etc/nginx/ssl/xmpp.{{ host }}"
+  when: acme_installed.rc > 0
+
+
+
+#- name: "Clone acme.sh repo"
+#  ansible.builtin.git:
+#    repo: 'https://github.com/Neilpang/acme.sh.git'
+#    dest: '/tmp/acme.sh'
+#  when: acme_installed.rc > 0
+
+#- name: "Install acme.sh"
+#  ansible.builtin.shell: cd /tmp/acme.sh && /tmp/acme.sh/acme.sh --install --accountemail {{ email }}
+#  when: acme_installed.rc > 0

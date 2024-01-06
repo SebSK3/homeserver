@@ -1,4 +1,4 @@
-- name: "Prepare reverseproxy by downloading all essential packages"
+- name: "Prepare XMPP server by downloading all essential packages"
   become: true
   ansible.builtin.package:
     name: "{{ packages_xmpp }}"

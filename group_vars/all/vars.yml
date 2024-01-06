@@ -1,6 +1,7 @@
 username: sebsk
 timezone: Europe/Warsaw
 guid: "1000"
+host: "kwasniak.xyz"
 
 packages_reverseproxy:
   - nginx
@@ -14,6 +15,8 @@ packages_storage:
 
 packages_xmpp:
   - sudo
+  - nginx
+  - socat
   - 'ca-certificates'
   - vim
   - acl

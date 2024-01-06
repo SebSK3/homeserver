@@ -1,4 +1,4 @@
-hosts: [xmpp.kwasniak.xyz]
+hosts: [xmpp.{{ host }}]
 
 modules:
   mod_roster:    {}
@@ -9,5 +9,27 @@ modules:
   mod_last:      {}
   mod_version:   {}
   mod_adhoc:     {}
+  mod_bosh:      {}
+acme:
+  #ca_url: https://acme-staging-v02.api.letsencrypt.org/directory
+  ## Production environment (the default):
+  ca_url: https://acme-v02.api.letsencrypt.org/directory
+  auto: true
 
-loglevel: warning
+listen:
+  -
+    port: 5222
+    module: ejabberd_c2s
+    tls: true
+  -
+    port: 8443
+    module: ejabberd_http
+    tls: true
+    request_handlers:
+      /: ejabberd_http_ws
+  -
+    port: 5280
+    module: ejabberd_http
+    tls: false
+    request_handlers:
+      /.well-known/acme-challenge: ejabberd_acme

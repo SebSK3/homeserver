@@ -1,0 +1,29 @@
+- name: "Copy over proxy config files"
+  ansible.builtin.template:
+    src: templates/common/proxy.j2
+    dest: /etc/nginx/proxy.conf
+    mode: "0644"
+
+- name: "Create scripts directory"
+  ansible.builtin.file:
+    path: /opt/scripts
+    state: directory
+    mode: "0644"
+
+- name: "Copy Cloudflare IP script file"
+  ansible.builtin.copy:
+    src: files/cloudflare-ips.sh
+    dest: /opt/scripts/cloudflare-ips.sh
+    mode: '0744'
+
+- name: "Copy over host-meta file"
+  ansible.builtin.template:
+    src: files/host-meta.j2
+    dest: /var/www/html/host-meta
+    mode: "0644"
+
+- name: "Copy over host-meta.json file"
+  ansible.builtin.template:
+    src: files/host-meta.json.j2
+    dest: /var/www/html/host-meta.json
+    mode: "0644"
