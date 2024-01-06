@@ -12,6 +12,21 @@ packages_reverseproxy:
 packages_storage:
   - samba
 
+packages_xmpp:
+  - sudo
+  - 'ca-certificates'
+  - vim
+  - acl
+  - docker
+  - 'curl'
+  - 'software-properties-common'
+  - 'python3-pip'
+  - 'python3-setuptools'
+  - 'docker-compose'
+  - 'apt-transport-https'
+  - 'rsync'
+
+
 msmtp_accounts:
 - account: notifications
   host: "{{ mail_host }}"

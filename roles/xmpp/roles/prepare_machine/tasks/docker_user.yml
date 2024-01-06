@@ -1,0 +1,18 @@
+- name: Enable docker
+  become: true
+  ansible.builtin.service:
+    name: docker
+    state: started
+
+- name: Enable containerd
+  become: true
+  ansible.builtin.service:
+    name: containerd
+    state: started
+
+- name: Add user to docker group
+  become: true
+  ansible.builtin.user:
+    name: "{{ username }}"
+    groups: docker
+    append: true

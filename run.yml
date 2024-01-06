@@ -5,6 +5,12 @@
     - name: "Perform essentials"
       ansible.builtin.import_tasks: tasks/update.yml
   tags: essentials
+
+- name: "Perform installation of XMPP server"
+  ansible.builtin.import_playbook: 'roles/xmpp/run.yml'
+  tags: xmpp
+
+
 - name: "Perform installation of reverse proxy server"
   hosts: reverse_proxy
   tasks:

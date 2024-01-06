@@ -1,10 +1,8 @@
 - name: Update packages
+  become: true
   ansible.builtin.apt:
     update_cache: true
     upgrade: true
-- name: Install vim
-  ansible.builtin.apt:
-    name: vim
 
 - name: Check if reboot required
   ansible.builtin.stat:

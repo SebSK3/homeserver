@@ -1,0 +1,7 @@
+- name: "Perform installation of XMPP server"
+  hosts: xmpp
+  roles:
+    - role: 'prepare_machine'
+    - role: 'ejabberd'
+
+  tags: xmpp

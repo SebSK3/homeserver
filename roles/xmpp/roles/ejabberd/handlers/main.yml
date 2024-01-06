@@ -1,0 +1,22 @@
+- name: Restart ejabberd
+  become_user: ejabberd
+  community.docker.docker_container:
+    name: 'ejabberd'
+    image: "ghcr.io/processone/ejabberd"
+    pull: true
+    state: 'started'
+    restart: true
+    ports:
+      - "5222:5222"
+      - "443:443"
+#      - "5269:5269"
+#      - "5280:5280"
+#      - "5443:5443"
+    volumes:
+      - "{{ docker_dir }}/{{ container_name }}/database:/opt/ejabberd/database"
+      - "{{ docker_dir }}/{{ container_name }}/conf:/opt/ejabberd/conf"
+      - "{{ docker_dir }}/{{ container_name }}/logs:/opt/ejabberd/logs"
+      - "{{ docker_dir }}/{{ container_name }}/upload:/opt/ejabberd/upload"
+      - "{{ docker_dir }}/{{ container_name }}/certs:/opt/ejabberd/certs"
+
+    restart_policy: unless-stopped

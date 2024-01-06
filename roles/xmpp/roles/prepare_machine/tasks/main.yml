@@ -1,0 +1,10 @@
+- name: "Include all XMPP machine preparation tasks"
+  ansible.builtin.include_tasks: "{{ xmpp_machine_preparation_task }}"
+  loop:
+    - install_packages.yml
+    - sudo.yml
+    - ejabberd_user.yml
+    - docker_user.yml
+    - docker_dirs.yml
+  loop_control:
+    loop_var: xmpp_machine_preparation_task
