@@ -6,6 +6,38 @@
     owner: "ejabberd"
     group: "ejabberd"
     mode: "0755"
+- name: "Create directory certs"
+  become: true
+  ansible.builtin.file:
+    path: "{{ docker_dir }}/{{ container_name }}/certs"
+    state: directory
+    owner: "ejabberd"
+    group: "ejabberd"
+    mode: "0755"
+- name: "Create directory database"
+  become: true
+  ansible.builtin.file:
+    path: "{{ docker_dir }}/{{ container_name }}/database"
+    state: directory
+    owner: "ejabberd"
+    group: "ejabberd"
+    mode: "0755"
+- name: "Create directory logs"
+  become: true
+  ansible.builtin.file:
+    path: "{{ docker_dir }}/{{ container_name }}/logs"
+    state: directory
+    owner: "ejabberd"
+    group: "ejabberd"
+    mode: "0755"
+- name: "Create directory upload"
+  become: true
+  ansible.builtin.file:
+    path: "{{ docker_dir }}/{{ container_name }}/upload"
+    state: directory
+    owner: "ejabberd"
+    group: "ejabberd"
+    mode: "0755"
 - name: "Copy over ejabberd.yml template"
   become: true
   ansible.builtin.template:
