@@ -1,8 +1,8 @@
 - name: Test nginx
-  command: nginx -t
+  ansible.builtin.command: nginx -t
   changed_when: false
   register: nginx_validated
 
 - name: "Restart nginx"
-  service: name=nginx state=restarted
+  ansible.builtin.service: name=nginx state=restarted
   when: nginx_validated is succeeded

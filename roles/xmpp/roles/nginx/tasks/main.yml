@@ -9,4 +9,3 @@
   loop_control:
     loop_var: nginx_task
   tags: nginx
-
