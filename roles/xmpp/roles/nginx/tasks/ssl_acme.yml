@@ -11,7 +11,7 @@
   when: acme_installed.rc > 0
 
 - name: "Get certificate"
-  ansible.builtin.shell: '/root/.acme.sh/acme.sh --issue --dns dns_cf --ocsp-must-staple --keylength 4096 -d xmpp.{{ host }}'
+  ansible.builtin.shell: '/root/.acme.sh/acme.sh --issue --dns dns_cf --keylength 4096 -d xmpp.{{ host }}'
   environment:
     CF_Token: "{{ cloudflare_token }}"
   when: acme_installed.rc > 0

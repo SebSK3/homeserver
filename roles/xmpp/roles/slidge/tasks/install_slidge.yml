@@ -1,0 +1,30 @@
+- name: "Ensure slidge repository exists in sources.list.d"
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/slidge.list
+  register: slidge_repo
+
+- name: "Add slidge repository"
+  become: true
+  ansible.builtin.shell: "wget -O- http://deb.slidge.im/repo/slidge.gpg.key \
+    |gpg --dearmor \
+    |sudo tee /usr/share/keyrings/slidge.gpg > /dev/null"
+  when: not slidge_repo.stat.exists
+
+- name: "Add slidge repository"
+  become: true
+  ansible.builtin.shell: "echo \"deb [signed-by=/usr/share/keyrings/slidge.gpg] http://deb.slidge.im/repo/debian bookworm nightly\" \
+    > /etc/apt/sources.list.d/slidge.list"
+  when: not slidge_repo.stat.exists
+
+- name: Update and upgrade apt packages
+  become: true
+  ansible.builtin.apt:
+    upgrade: true
+    update_cache: true
+  when: not slidge_repo.stat.exists
+
+- name: "Install slidge"
+  become: true
+  ansible.builtin.package:
+    name: "slidge"
+  when: not slidge_repo.stat.exists

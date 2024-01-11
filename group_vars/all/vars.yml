@@ -20,7 +20,9 @@ packages_xmpp:
   - 'ca-certificates'
   - vim
   - acl
-  - docker
+  - prosody
+  - luarocks
+  - 'liblua5.4-dev'
   - 'curl'
   - 'software-properties-common'
   - 'python3-pip'

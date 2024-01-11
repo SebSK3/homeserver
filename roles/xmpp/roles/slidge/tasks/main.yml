@@ -1,0 +1,8 @@
+- name: "Include all slidge tasks"
+  ansible.builtin.include_tasks: "{{ slidge_task }}"
+  loop:
+    - install_slidge.yml
+    - copy_config_files.yml
+  loop_control:
+    loop_var: slidge_task
+  tags: slidge

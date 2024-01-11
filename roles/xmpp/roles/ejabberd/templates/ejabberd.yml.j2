@@ -32,6 +32,7 @@ modules:
     put_url: "https://xmpp.{{ host }}/upload"
     access:
       - allow: admin
+      - allow: slidge_acl
 
 acme:
   auto: false
@@ -51,6 +52,12 @@ certfiles:
   - "/opt/ejabberd/certs/xmpp.{{ host }}.fullchain.cer"
   - "/opt/ejabberd/certs/xmpp.{{ host }}.cer"
 listen:
+  -
+    port: 5347
+    module: ejabberd_service
+    hosts:
+      "discord.xmpp.kwasniak.xyz":
+        password: secret
   -
     port: 5222
     module: ejabberd_c2s
@@ -74,5 +81,15 @@ acl:
   admin:
     user:
       - "sebsk@xmpp.kwasniak.xyz"
+  slidge_acl:
+    server:
+      - "discord.xmpp.kwasniak.xyz"
+
+access_rules:
+  slidge_rule:
+    - allow: slidge_acl
+    - allow: admin
+  configure:
+    - allow: admin
 
 loglevel: 5

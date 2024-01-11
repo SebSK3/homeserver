@@ -3,8 +3,5 @@
   loop:
     - install_packages.yml
     - sudo.yml
-    - ejabberd_user.yml
-    - docker_user.yml
-    - docker_dirs.yml
   loop_control:
     loop_var: xmpp_machine_preparation_task
