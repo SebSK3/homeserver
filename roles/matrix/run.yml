@@ -2,8 +2,9 @@
   hosts: xmpp
   roles:
     - role: 'prepare_machine'
-    - role: 'prosody'
     - { role: 'nginx', become: true }
-    - role: 'slidge'
+    - role: 'synapse'
+    - role: 'mautrix'
+    # - role: 'slidge'
 
   tags: xmpp

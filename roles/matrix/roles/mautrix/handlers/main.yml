@@ -1,0 +1,11 @@
+- name: Restart mautrix-facebook
+  community.docker.docker_container:
+    restart: true
+    name: 'mautrix-facebook'
+    image: "dock.mau.dev/mautrix/facebook:latest"
+    pull: true
+    state: 'started'
+    network_mode: host
+    volumes:
+      - "{{ docker_dir }}/{{ container_name }}/facebook:/data:z"
+    restart_policy: unless-stopped

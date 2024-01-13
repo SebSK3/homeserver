@@ -1,0 +1,6 @@
+- name: "Start and enable matrix-synapse"
+  become: true
+  ansible.builtin.service:
+    name: matrix-synapse
+    state: started
+    enabled: true

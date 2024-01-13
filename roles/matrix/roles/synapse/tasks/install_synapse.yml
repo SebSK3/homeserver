@@ -1,0 +1,33 @@
+- name: "Ensure matrix.org repository exists in sources.list.d"
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/matrix-org.list
+  register: synapse_repo
+
+- name: "Add matrix.org gpg key"
+  become: true
+  ansible.builtin.shell: "wget -O /usr/share/keyrings/matrix-org-archive-keyring.gpg https://packages.matrix.org/debian/matrix-org-archive-keyring.gpg"
+  when: not synapse_repo.stat.exists
+  tags:
+    - skip_ansible_lint
+
+- name: "Add matrix.org repository"
+  become: true
+  ansible.builtin.shell: "echo \"deb [signed-by=/usr/share/keyrings/matrix-org-archive-keyring.gpg] \
+    https://packages.matrix.org/debian/ $(lsb_release -cs) main\" | \
+    sudo tee /etc/apt/sources.list.d/matrix-org.list"
+  when: not synapse_repo.stat.exists
+  tags:
+    - skip_ansible_lint
+
+- name: Update and upgrade apt packages
+  become: true
+  ansible.builtin.apt:
+    upgrade: true
+    update_cache: true
+  when: not synapse_repo.stat.exists
+
+- name: "Install synapse"
+  become: true
+  ansible.builtin.package:
+    name: "matrix-synapse-py3"
+  when: not synapse_repo.stat.exists

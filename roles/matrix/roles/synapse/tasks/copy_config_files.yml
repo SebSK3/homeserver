@@ -1,0 +1,16 @@
+- name: "Copy over server_name.yaml template"
+  become: true
+  ansible.builtin.template:
+    src: 'templates/server_name.yaml.j2'
+    dest: "/etc/matrix-synapse/conf.d/server_name.yaml"
+    mode: "0644"
+  notify: Restart synapse
+
+- name: "Copy over homeserver.yaml template"
+  become: true
+  ansible.builtin.template:
+    src: 'templates/homeserver.yaml.j2'
+    dest: "/etc/matrix-synapse/homeserver.yaml"
+    mode: "0644"
+  notify: Restart synapse
+

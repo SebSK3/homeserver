@@ -25,23 +25,13 @@ server {
     #location / {
     #    return 403;
     #}
-    location /slidge {
-        alias /var/lib/slidge/attachments/;
-    }
-    location /xmpp-websocket {
+    location / {
         include /etc/nginx/proxy.conf;
 
         set $upstream_app 127.0.0.1;
-        set $upstream_port 5280;
+        set $upstream_port 8008;
         set $upstream_proto http;
-        proxy_pass $upstream_proto://$upstream_app:$upstream_port/xmpp-websocket;
+        proxy_pass $upstream_proto://$upstream_app:$upstream_port;
     }
-    location /file_share {
-        include /etc/nginx/proxy.conf;
 
-        set $upstream_app 127.0.0.1;
-        set $upstream_port 5280;
-        set $upstream_proto http;
-        proxy_pass $upstream_proto://$upstream_app:$upstream_port$request_uri;
-    }
 }

@@ -1,0 +1,7 @@
+- name: "Include all mautrix tasks"
+  ansible.builtin.include_tasks: "{{ mautrix_task }}"
+  loop:
+    - copy_config_file.yml
+    - docker_container.yml
+  loop_control:
+    loop_var: mautrix_task

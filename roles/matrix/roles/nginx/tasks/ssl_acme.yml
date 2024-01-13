@@ -23,9 +23,9 @@
     mode: "0644"
   when: acme_installed.rc > 0
 
-- name: "Create folder for cert xmpp.{{ host }}"
+- name: "Create folder for cert matrix.{{ host }}"
   ansible.builtin.file:
-    path: "/etc/nginx/ssl/xmpp.{{ host }}"
+    path: "/etc/nginx/ssl/matrix.{{ host }}"
     state: directory
     mode: "0644"
   when: acme_installed.rc > 0
@@ -36,7 +36,7 @@
     --key-file "${CONFIG_ROOT}/$DOMAIN.key" --cert-file "${CONFIG_ROOT}/$DOMAIN.cer"'
   environment:
     DOMAIN: "xmpp.{{ host }}"
-    CONFIG_ROOT: "/etc/nginx/ssl/xmpp.{{ host }}"
+    CONFIG_ROOT: "/etc/nginx/ssl/matrix.{{ host }}"
   when: acme_installed.rc > 0
 
 # - name: "Clone acme.sh repo"
