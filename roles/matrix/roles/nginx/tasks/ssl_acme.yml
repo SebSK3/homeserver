@@ -2,6 +2,7 @@
   ansible.builtin.shell: '/root/.acme.sh/acme.sh'
   ignore_errors: true
   register: acme_installed
+
 - name: "Install acme.sh"
   ansible.builtin.shell: 'curl https://get.acme.sh | sh -s email={{ email }}'
   when: acme_installed.rc > 0
@@ -11,7 +12,7 @@
   when: acme_installed.rc > 0
 
 - name: "Get certificate"
-  ansible.builtin.shell: '/root/.acme.sh/acme.sh --issue --dns dns_cf --keylength 4096 -d xmpp.{{ host }}'
+  ansible.builtin.shell: '/root/.acme.sh/acme.sh --issue --dns dns_cf --keylength 4096 -d matrix.{{ host }}'
   environment:
     CF_Token: "{{ cloudflare_token }}"
   when: acme_installed.rc > 0
@@ -35,7 +36,7 @@
     --fullchain-file "${CONFIG_ROOT}/$DOMAIN.fullchain.cer" \
     --key-file "${CONFIG_ROOT}/$DOMAIN.key" --cert-file "${CONFIG_ROOT}/$DOMAIN.cer"'
   environment:
-    DOMAIN: "xmpp.{{ host }}"
+    DOMAIN: "matrix.{{ host }}"
     CONFIG_ROOT: "/etc/nginx/ssl/matrix.{{ host }}"
   when: acme_installed.rc > 0
 

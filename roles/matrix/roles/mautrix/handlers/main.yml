@@ -1,11 +1,18 @@
-- name: Restart mautrix-facebook
+- name: Restart all mautrix dockers
   community.docker.docker_container:
     restart: true
-    name: 'mautrix-facebook'
-    image: "dock.mau.dev/mautrix/facebook:latest"
+    name: 'mautrix-{{ item }}'
+    image: "dock.mau.dev/mautrix/{{ item }}:latest"
     pull: true
     state: 'started'
     network_mode: host
     volumes:
-      - "{{ docker_dir }}/{{ container_name }}/facebook:/data:z"
+      - "{{ docker_dir }}/{{ container_name }}/{{ item }}:/data:z"
     restart_policy: unless-stopped
+  loop: "{{ mautrix_to_enable }}"
+
+- name: Restart synapse
+  become: true
+  ansible.builtin.service:
+    name: matrix-synapse
+    state: restarted

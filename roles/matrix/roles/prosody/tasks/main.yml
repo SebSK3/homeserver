@@ -1,7 +1,0 @@
-- name: "Include all prosody tasks"
-  ansible.builtin.include_tasks: "{{ prosody_task }}"
-  loop:
-    - copy_config_files.yml
-    - enable_prosody.yml
-  loop_control:
-    loop_var: prosody_task

@@ -1,6 +1,0 @@
-- name: "Start and enable discord slidge"
-  become: true
-  ansible.builtin.service:
-    name: prosody
-    state: started
-    enabled: true

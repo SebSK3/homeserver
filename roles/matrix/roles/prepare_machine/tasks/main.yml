@@ -1,7 +1,7 @@
-- name: "Include all XMPP machine preparation tasks"
-  ansible.builtin.include_tasks: "{{ xmpp_machine_preparation_task }}"
+- name: "Include all Matrix machine preparation tasks"
+  ansible.builtin.include_tasks: "{{ matrix_machine_preparation_task }}"
   loop:
     - install_packages.yml
     - sudo.yml
   loop_control:
-    loop_var: xmpp_machine_preparation_task
+    loop_var: matrix_machine_preparation_task

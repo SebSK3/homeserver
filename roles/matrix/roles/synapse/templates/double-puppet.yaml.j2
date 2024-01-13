@@ -1,0 +1,14 @@
+id: doublepuppet
+url:
+as_token: {{ double_puppet_token }}
+hs_token: lookup('community.general.random_string', base64=True)
+sender_localpart: xdxdxd
+# Bridges don't like ratelimiting. This should only apply when using the
+# as_token, normal user tokens will still be ratelimited.
+rate_limited: false
+namespaces:
+  users:
+  # Replace your\.domain with your server name (escape dots for regex)
+  - regex: '@.*:kwasniak\.xyz' # TODO: i need to escape regex cant use host variable
+    # This must be false so the appservice doesn't take over all users completely.
+    exclusive: false

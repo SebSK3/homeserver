@@ -1,5 +1,5 @@
 homeserver:
-    address: https://xmpp.{{ host }} # TODO: change this
+    address: https://matrix.{{ host }}
     domain: {{ host }}
     verify_ssl: true
     software: standard
@@ -57,13 +57,13 @@ bridge:
         - first_name
     command_prefix: "!fb"
     invite_own_puppet_to_pm: false
-    sync_with_custom_puppets: false
+    sync_with_custom_puppets: true
     sync_direct_chat_list: false
     double_puppet_server_map:
-        example.com: https://example.com
+        {{ host }}: https://matrix.{{ host }}
     double_puppet_allow_discovery: false
     login_shared_secret_map:
-        example.com: foobar
+        {{ host }}: "as_token:{{ double_puppet_token }}"
     presence_from_facebook: false
     update_avatar_initial_sync: true
     delivery_receipts: false
@@ -170,7 +170,7 @@ bridge:
     # except if the config file is not writable.
     resend_bridge_info: false
     # When using double puppeting, should muted chats be muted in Matrix?
-    mute_bridging: false
+    mute_bridging: true
     # Whether or not mute status and tags should only be bridged when the portal room is created.
     tag_only_on_create: true
     # If set to true, downloading media from the CDN will use a plain aiohttp client without the usual headers or

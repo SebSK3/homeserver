@@ -4,5 +4,6 @@
     - configure_postgresql.yml
     - install_synapse.yml
     - copy_config_files.yml
+    - syncv3.yml
   loop_control:
     loop_var: synapse_task

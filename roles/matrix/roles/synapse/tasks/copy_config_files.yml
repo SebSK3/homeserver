@@ -14,3 +14,10 @@
     mode: "0644"
   notify: Restart synapse
 
+- name: "Copy over double-puppet.yaml template"
+  become: true
+  ansible.builtin.template:
+    src: 'templates/double-puppet.yaml.j2'
+    dest: "/etc/matrix-synapse/double-puppet.yaml"
+    mode: "0644"
+  notify: Restart synapse

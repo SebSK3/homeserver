@@ -6,9 +6,9 @@
       ansible.builtin.import_tasks: tasks/update.yml
   tags: essentials
 
-- name: "Perform installation of XMPP server"
-  ansible.builtin.import_playbook: 'roles/xmpp/run.yml'
-  tags: xmpp
+- name: "Perform installation of Matrix server"
+  ansible.builtin.import_playbook: 'roles/matrix/run.yml'
+  tags: matrix
 
 
 - name: "Perform installation of reverse proxy server"

@@ -1,0 +1,13 @@
+- name: Make sure the syncv3 container is running
+  community.docker.docker_container:
+    name: 'syncv3'
+    image: "ghcr.io/matrix-org/sliding-sync:latest"
+    pull: true
+    state: 'started'
+    network_mode: host
+    env:
+      SYNCV3_SERVER: "https://matrix.{{ host }}"
+      SYNCV3_SECRET: "{{ syncv3_secret }}"
+      SYNCV3_BINDADDR: ":8009"
+      SYNCV3_DB: "user=syncv3_user dbname=syncv3 sslmode=disable password='{{ syncv3_pass }}'"
+    restart_policy: unless-stopped

@@ -15,15 +15,5 @@
     src: files/cloudflare-ips.sh
     dest: /opt/scripts/cloudflare-ips.sh
     mode: '0744'
+  notify: "First start of Cloudflare IP script"
 
-- name: "Copy over host-meta file"
-  ansible.builtin.template:
-    src: files/host-meta.j2
-    dest: /var/www/html/host-meta
-    mode: "0644"
-
-- name: "Copy over host-meta.json file"
-  ansible.builtin.template:
-    src: files/host-meta.json.j2
-    dest: /var/www/html/host-meta.json
-    mode: "0644"

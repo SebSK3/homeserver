@@ -1,10 +1,8 @@
-- name: "Perform installation of XMPP server"
-  hosts: xmpp
+- name: "Perform installation of Matrix server"
+  hosts: matrix
   roles:
     - role: 'prepare_machine'
     - { role: 'nginx', become: true }
     - role: 'synapse'
     - role: 'mautrix'
-    # - role: 'slidge'
-
-  tags: xmpp
+  tags: matrix

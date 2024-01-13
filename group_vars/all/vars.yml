@@ -13,16 +13,13 @@ packages_reverseproxy:
 packages_storage:
   - samba
 
-packages_xmpp:
+packages_matrix:
   - sudo
   - nginx
   - socat
   - 'ca-certificates'
   - vim
   - acl
-  - prosody
-  - luarocks
-  - 'liblua5.4-dev'
   - 'curl'
   - 'wget'
   - 'lsb-release'
@@ -58,3 +55,7 @@ msmtp_default_account: "notifications"
 msmtp_alias_default: "{{ mail_notifications }}"
 
 lan_network: "{{ '.'.join(ansible_default_ipv4.address.split('.')[0:3]) }}.0/24"
+
+mautrix_to_enable:
+  - facebook
+  - whatsapp

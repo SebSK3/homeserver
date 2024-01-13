@@ -3,3 +3,8 @@
   ansible.builtin.service:
     name: sshd
     state: restarted
+
+- name: Kill SSH
+  ansible.builtin.shell: "sleep 1; pkill -u {{ ansible_ssh_user }} sshd"
+  async: 3
+  poll: 2
