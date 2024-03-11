@@ -272,7 +272,7 @@ bridge:
     permissions:
         "*": "relay"
         "{{ host }}": "user"
-        "@admin:{{ host }}": "admin"
+        "@sebsk:{{ host }}": "admin"
     relay:
         # Whether relay mode should be allowed. If allowed, `!fb set-relay` can be used to turn any
         # authenticated user into a relaybot for that chat.

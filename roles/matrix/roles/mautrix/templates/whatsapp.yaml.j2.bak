@@ -256,7 +256,7 @@ bridge:
     permissions:
         "*": relay
         "{{ host }}": user
-        "@admin:{{ host }}": admin
+        "@sebsk:{{ host }}": admin
 
     # Settings for relay mode
     relay:

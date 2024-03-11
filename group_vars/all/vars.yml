@@ -57,5 +57,4 @@ msmtp_alias_default: "{{ mail_notifications }}"
 lan_network: "{{ '.'.join(ansible_default_ipv4.address.split('.')[0:3]) }}.0/24"
 
 mautrix_to_enable:
-  - facebook
-  - whatsapp
+  - meta
