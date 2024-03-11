@@ -1,1 +1,4 @@
 .vscode
+
+# I know it's encrypted, but i prefer to play it safe
+group_vars/all/secret.yml
