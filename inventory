@@ -1,0 +1,17 @@
+[reverse_proxy]
+'Reverse proxy' ansible_host="{{ reverse_proxy_local_ip }}"
+
+[storage]
+'Storage' ansible_host="{{ storage_local_ip }}"
+
+[matrix]
+'Matrix' ansible_ssh_user=sebsk ansible_host="{{ matrix_local_ip }}"
+
+[multi:children]
+reverse_proxy
+storage
+matrix
+
+[multi:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file=~/.ssh/christopher
