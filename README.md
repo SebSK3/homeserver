@@ -1,16 +1,17 @@
 # sebsk's homeserver
 
-This repo hosts rewrite of my personal homeserver. It assumes four different machines to different tasks:
+This repo hosts rewrite of my personal homeserver. It assumes five different machines to different tasks:
 
-- Reverse proxy machine: it just contains reverse proxy (haproxy) to other machines
-- Storage machine: the stuff that is important to have backups of
-- Matrix machine: bridge of all stuff that i don't really need, but frens use - Facebook Messenger, Whatsapp, Instagram chats, Telegram
-- Dockers machine: It contains all the apps that i use, each isolated in docker, for now it's about 10-13 apps like Paperless-ngx, Nextcloud, PhotoPrism etc.
+- Reverse proxy machine: the one and only.
+- Storage machine: all the stuff that has heavy lifting with data. It has qBitTorrent and *arr services. Serves them via NFS.
+- Media machine: Nextcloud, Jellyfin, Immich.
+- Security machine: Vaultwarden, Zoneminder, Homeassistant.
+- Services machine: Everything else that doesn't belong to all other three (e.g Paperless-ngx).
 
-Dockers machine uses the storage machine for the stuff that really needs it (e.g Nextcloud user files). In future i plan to move from Docker to Kubernetes.
+Every machine except reverse proxy has nginx which routes the traffic to corresponding dockers.
 
-## TODO
+All the machines have internal network with reverse proxy machine.
 
-### Matrix:
+All the machines, except reverse proxy machine are connected with another internal network, which is for storage.
 
-- [ ]  Syncv3 account and database creation
+In future i plan to move from Docker to Kubernetes.
